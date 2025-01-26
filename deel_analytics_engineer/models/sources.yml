@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: prod
+    database: deel-analytics-engineer
+    schema: globepay_source
+    tables:
+      - name: acceptance_report
+      - name: chargeback_report
