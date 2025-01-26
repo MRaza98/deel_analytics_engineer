@@ -8,7 +8,7 @@ WITH base AS (
 
 SELECT DISTINCT
 
-    DATE_TRUNC(date_time, day) AS date_day
+    CAST(DATE_TRUNC(date_time, day) AS date) AS date_day
     , currency AS payment_currency
     , 'USD' AS base_currency
     , exchange_rate

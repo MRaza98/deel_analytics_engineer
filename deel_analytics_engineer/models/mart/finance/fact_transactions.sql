@@ -18,7 +18,7 @@ WITH acceptance_report AS (
 , consolidated AS (
 
     SELECT
-        DATE_TRUNC(acceptance_report.date_time, day) AS date_day
+        CAST(DATE_TRUNC(acceptance_report.date_time, day) AS date) AS date_day
         , acceptance_report.external_ref
         , acceptance_report.status
         , acceptance_report.source
