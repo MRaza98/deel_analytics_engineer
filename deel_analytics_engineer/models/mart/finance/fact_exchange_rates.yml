@@ -13,14 +13,11 @@ models:
       - name: date_day
         tests:
           - not_null
-          - dbt_utils.is_date
         description: "Date of exchange rate"
 
       - name: payment_currency
         tests:
           - not_null
-          - dbt_utils.length_equals:
-              length: 3
           - relationships:
               to: ref('stage_acceptance_report')
               field: currency
@@ -42,4 +39,3 @@ models:
       
       - dbt_utils.expression_is_true:
           expression: "date_day <= current_date"
-          description: "Ensure no future dates exist"

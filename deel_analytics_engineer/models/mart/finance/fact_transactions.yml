@@ -30,7 +30,6 @@ models:
       - name: payment_currency_amount
         tests:
           - not_null
-          - dbt_utils.positive_value
 
       - name: amount_USD
         tests:

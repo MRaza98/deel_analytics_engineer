@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: chargeback_report
+    description: "Model contains chargeback information on transactions from Globepay"
+    columns:
+      - name: external_ref
+        tests:
+          - not_null
+          - unique
+        description: "External reference ID is the PK of this model"
+
+      - name: status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['success', 'failed', 'pending']
+        description: "Payment status"
+
+      - name: source
+        tests:
+          - not_null
+        description: "Source system identifier"
+
+      - name: chargeback
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+        description: "Boolean indicating if CVV was provided"
