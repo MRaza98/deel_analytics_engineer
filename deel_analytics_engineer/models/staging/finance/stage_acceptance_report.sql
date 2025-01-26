@@ -16,6 +16,6 @@ SELECT
     , country
     , currency
     , rates
-    , {{ exchange_rate_unnest('currency', 'rates') }} AS usd_exchange_rate
+    , {{ exchange_rate_unnest('currency', 'rates') }} AS exchange_rate
 
 FROM source_data
