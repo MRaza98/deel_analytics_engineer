@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: fact_transactions
+    description: "Globepay transations with currencies converted"
+    columns:
+      - name: PK_FACT_TRANSACTIONS
+        tests:
+          - unique
+          - not_null
+
+      - name: external_ref
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: ref('stage_acceptance_report')
+              field: external_ref
+
+      - name: status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['success', 'failed', 'pending']
+
+      - name: date_time
+        tests:
+          - not_null
+
+      - name: payment_currency_amount
+        tests:
+          - not_null
+          - dbt_utils.positive_value
+
+      - name: amount_USD
+        tests:
+          - not_null
+
+      - name: payment_currency
+        tests:
+          - not_null
+          - relationships:
+              to: ref('fact_exchange_rates')
+              field: payment_currency
+
+    tests:
+      - dbt_utils.equal_rowcount:
+          compare_model: ref('stage_acceptance_report')

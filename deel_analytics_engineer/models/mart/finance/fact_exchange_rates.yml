@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: fact_exchange_rates
+    description: "Tests for the currency conversion fact table"
+    columns:
+      - name: PK_DIM_CURRENCY_CONVERSION
+        tests:
+          - not_null
+          - unique
+        description: "PK should be unique and not null"
+
+      - name: date_day
+        tests:
+          - not_null
+          - dbt_utils.is_date
+        description: "Date of exchange rate"
+
+      - name: payment_currency
+        tests:
+          - not_null
+          - dbt_utils.length_equals:
+              length: 3
+          - relationships:
+              to: ref('stage_acceptance_report')
+              field: currency
+        description: "Payment currency code in 3 letters"
+
+      - name: base_currency
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['USD']
+        description: "Base currency is always USD"
+
+      - name: exchange_rate
+        tests:
+          - not_null
+        description: "Exchange rate to USD"
+
+    tests:
+      
+      - dbt_utils.expression_is_true:
+          expression: "date_day <= current_date"
+          description: "Ensure no future dates exist"
